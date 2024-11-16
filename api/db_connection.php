@@ -1,14 +1,12 @@
 <?php
-define('DB_HOST', 'localhost');  
-define('DB_USER', 'root'); 
-define('DB_PASS', ''); 
-define('DB_NAME', 'ecommerce');   
+$host = 'localhost'; // Database host
+$user = 'root';      // Database username
+$pass = '';          // Database password
+$db   = 'square'; // Database name
 
-// Create connection
-$conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+$conn = new mysqli($host, $user, $pass, $db);
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-
 ?>
