@@ -1,15 +1,30 @@
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 function ProductCard({ product }) {
   const discountedPrice = product.price - (product.price * product.discount) / 100;
 
   return (
     <div className="max-w-96 rounded-xl overflow-hidden shadow-xl border border-gray-700 transition-transform transform hover:scale-105 hover:shadow-2xl bg-white">
+      {/* Discount badge */}
+      {product.discount > 0 && (
+        <div className="absolute top-4 left-4 z-10">
+          <motion.div
+            initial={{ rotate: -10 }}
+            animate={{ rotate: [0, -5, 5, -5, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+            className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg backdrop-blur-sm"
+          >
+            {product.discount}% OFF
+          </motion.div>
+        </div>
+      )}
       <div className="w-full h-60 relative overflow-hidden bg-white p-4">
         <img
-          className="w-full h-full object-contain transition-transform duration-300 ease-in-out hover:scale-110"
+          className="w-full h-full object-contain transition-transform duration-300 ease-in-out hover:scale-110 cursor-pointer"
           src={product.image}
           alt={product.title}
+          onClick={() => window.location.href = `/products/${product.id}`}
         />
       </div>
       <div className="px-4 py-4">

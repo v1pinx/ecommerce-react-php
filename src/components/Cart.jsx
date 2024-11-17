@@ -1,6 +1,80 @@
 import React, { useState, useEffect } from 'react';
-import { Trash2, Plus, Minus } from 'lucide-react';
+import { Trash2, Plus, Minus, ShoppingCart, Sparkles, CreditCard, Truck, Ticket, Wand2 } from 'lucide-react';
+import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.3,
+      delayChildren: 0.4,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { y: 20, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+  },
+};
+
+const CartItem = ({ item, updateQuantity, deleteFromCart }) => (
+  <motion.div
+    variants={itemVariants}
+    className="group flex items-center justify-between p-6 bg-black/40 rounded-xl border border-purple-900/40 hover:border-purple-500/50 backdrop-blur-xl relative overflow-hidden mb-4"
+  >
+    <div className="absolute inset-0 bg-gradient-to-r from-purple-900/10 to-blue-900/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+
+    <div className="flex items-center space-x-4 relative">
+      <div className="rounded-lg overflow-hidden">
+        <img
+          src={item.product.image || '/api/placeholder/80/80'}
+          alt={item.product.title}
+          className="w-64 object-cover"
+        />
+      </div>
+      <div>
+        <h3 className="font-serif text-purple-300">{item.product.title}</h3>
+        <p className="text-gray-400">${item.product.price}</p>
+      </div>
+    </div>
+
+    <div className="flex items-center space-x-4 relative">
+      <div className="flex items-center space-x-2 bg-black/30 rounded-lg p-1">
+        <motion.button
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
+          className="p-1 text-purple-400 hover:text-purple-300"
+        >
+          <Minus className="w-4 h-4" />
+        </motion.button>
+        <span className="w-8 text-center text-purple-300">{item.quantity}</span>
+        <motion.button
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
+          className="p-1 text-purple-400 hover:text-purple-300"
+        >
+          <Plus className="w-4 h-4" />
+        </motion.button>
+      </div>
+
+      <motion.button
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+        onClick={() => deleteFromCart(item.product.id)}
+        className="p-2 text-red-400 hover:text-red-300 bg-black/30 rounded-lg"
+      >
+        <Trash2 className="w-4 h-4" />
+      </motion.button>
+    </div>
+  </motion.div>
+);
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -24,7 +98,7 @@ const Cart = () => {
       if (!response.ok) {
         throw new Error(data.message || 'Failed to fetch cart');
       }
-      if(data.cart == null){
+      if (data.cart == null) {
         setCartItems([]);
         return;
       }
@@ -109,6 +183,9 @@ const Cart = () => {
       );
 
       toast.success('Product removed from cart.');
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
     } catch (err) {
       toast.error(err.message || 'An error occurred.');
     }
@@ -171,7 +248,9 @@ const Cart = () => {
       }
 
       toast.success('Order placed successfully!');
-      // Optionally redirect or clear cart here
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
     } catch (err) {
       setError(err.message);
       toast.error(err.message || 'An error occurred during checkout.');
@@ -184,143 +263,161 @@ const Cart = () => {
     fetchCart();
   }, []);
 
+
   if (loading) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="bg-red-50 border-l-4 border-red-500 p-4 m-4">
-        <div className="flex">
-          <div className="ml-3">
-            <p className="text-red-700">{error}</p>
-          </div>
-        </div>
+      <div className="min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-purple-900 via-gray-900 to-black flex justify-center items-center">
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+        >
+          <Sparkles className="w-8 h-8 text-purple-400" />
+        </motion.div>
       </div>
     );
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-4 py-20">
-      <div className="bg-white rounded-lg shadow-lg">
-        <div className="px-6 py-4 border-b border-gray-200">
-          <h2 className="text-xl font-semibold text-gray-800">Shopping Cart</h2>
-        </div>
+    <div className="min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-purple-900 via-gray-900 to-black relative overflow-hidden py-16">
+      {/* Magical Particles */}
+      <div className="fixed inset-0 opacity-40">
+        {[...Array(20)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-1 h-1 bg-purple-400 rounded-full"
+            animate={{
+              scale: [1, 2, 1],
+              opacity: [0.3, 0.8, 0.3],
+              y: [Math.random() * 100, Math.random() * window.innerHeight],
+              x: [Math.random() * 100, Math.random() * window.innerWidth],
+            }}
+            transition={{
+              duration: Math.random() * 8 + 5,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+          />
+        ))}
+      </div>
 
-        <div className="p-6">
-          {cartItems.length === 0 ? (
-            <div className="text-center py-8 text-gray-500">
-              Your cart is empty
-            </div>
-          ) : (
-            <>
-              <div className="space-y-4">
+      <div className="max-w-4xl mx-auto p-4 py-20 relative">
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center mb-12"
+        >
+          <motion.div
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-black/60 border border-purple-500/30 mb-8 backdrop-blur-xl"
+          >
+            <ShoppingCart className="w-5 h-5 text-purple-400" />
+            <span className="text-sm text-purple-300 font-serif">It's time to checkout</span>
+          </motion.div>
+          <motion.h1
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            className="text-7xl font-serif font-bold tracking-tight bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent mb-6"
+          >
+            Your Cart
+          </motion.h1>
+        </motion.div>
+
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="bg-black/40 rounded-2xl border border-purple-900/40 backdrop-blur-xl overflow-hidden"
+        >
+          <div className="p-6">
+            {cartItems.length === 0 ? (
+              <motion.div
+                variants={itemVariants}
+                className="text-center py-12"
+              >
+                <Wand2 className="w-12 h-12 text-purple-400 mx-auto mb-4" />
+                <p className="text-purple-300 font-serif">Your cart is empty</p>
+              </motion.div>
+            ) : (
+              <>
                 {cartItems.map((item) => (
-                  <div
+                  <CartItem
                     key={item.product.id}
-                    className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow"
-                  >
-                    <div className="flex items-center space-x-4">
-                      <img
-                        src={item.product.image || '/api/placeholder/80/80'}
-                        alt={item.product.title}
-                        className="w-20 h-20 object-cover rounded-md"
-                      />
-                      <div>
-                        <h3 className="font-medium text-gray-900">{item.product.title}</h3>
-                        <p className="text-gray-600">${item.product.price}</p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center space-x-4">
-                      <div className="flex items-center space-x-2">
-                        <button
-                          onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
-                          className="p-1 rounded-md hover:bg-gray-100 active:bg-gray-200 transition-colors"
-                        >
-                          <Minus className="h-4 w-4" />
-                        </button>
-                        <span className="w-8 text-center font-medium">{item.quantity}</span>
-                        <button
-                          onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
-                          className="p-1 rounded-md hover:bg-gray-100 active:bg-gray-200 transition-colors"
-                        >
-                          <Plus className="h-4 w-4" />
-                        </button>
-                      </div>
-
-                      <button
-                        onClick={() => deleteFromCart(item.product.id)}
-                        className="p-1 text-red-500 hover:bg-red-50 rounded-md transition-colors"
-                        aria-label="Delete item"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </button>
-                    </div>
-                  </div>
+                    item={item}
+                    updateQuantity={updateQuantity}
+                    deleteFromCart={deleteFromCart}
+                  />
                 ))}
-              </div>
-
-              <div className="mt-6 flex flex-col sm:flex-row justify-between items-center pt-6 border-t border-gray-200">
-                <div className="text-lg font-medium text-gray-900 mb-4 sm:mb-0">
-                  Total: ${calculateTotal().toFixed(2)}
-                </div>
-
-                <div className="flex space-x-2">
-                  <input
-                    type="text"
-                    value={couponCode}
-                    onChange={(e) => setCouponCode(e.target.value)}
-                    placeholder="Enter Coupon Code"
-                    className="border px-4 py-2 rounded-md"
-                  />
-                  <button
-                    onClick={applyCoupon}
-                    className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700"
-                  >
-                    Apply Coupon
-                  </button>
-                </div>
-
-                {/* Shipping Address */}
-                <div className="mt-4 w-full">
-                  <textarea
-                    value={shippingAddress}
-                    onChange={(e) => setShippingAddress(e.target.value)}
-                    placeholder="Enter shipping address"
-                    className="border px-4 py-2 rounded-md w-full"
-                  />
-                </div>
-
-                {/* Payment Method */}
-                <div className="mt-4">
-                  <select
-                    value={paymentMethod}
-                    onChange={(e) => setPaymentMethod(e.target.value)}
-                    className="border px-4 py-2 rounded-md"
-                  >
-                    <option value="COD">Cash on Delivery</option>
-                    <option value="Card">Credit/Debit Card</option>
-                  </select>
-                </div>
-
-                <button
-                  className="w-full sm:w-auto bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 
-                           focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 
-                           transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                  onClick={handleCheckout}
-                  disabled={isSubmitting}
+            
+                <motion.div
+                  variants={itemVariants}
+                  className="mt-8 space-y-6"
                 >
-                  {isSubmitting ? 'Processing...' : 'Proceed to Checkout'}
-                </button>
-              </div>
-            </>
-          )}
-        </div>
+                  <div className="flex flex-col space-y-4">
+                    <div className="flex items-center space-x-4">
+                      <input
+                        type="text"
+                        value={couponCode}
+                        onChange={(e) => setCouponCode(e.target.value)}
+                        placeholder="Enter Coupon Code"
+                        className="flex-1 p-4 bg-black/40 border border-purple-900/40 rounded-xl text-purple-300 placeholder-purple-600 focus:outline-none focus:border-purple-500/50"
+                      />
+                      <motion.button
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        onClick={applyCoupon}
+                        className="px-6 py-4 bg-purple-900/60 text-purple-300 rounded-xl hover:bg-purple-800/60 flex items-center gap-2"
+                      >
+                        <Ticket className="w-4 h-4" />
+                        Apply
+                      </motion.button>
+                    </div>
+
+                    <textarea
+                      value={shippingAddress}
+                      onChange={(e) => setShippingAddress(e.target.value)}
+                      placeholder="Enter shipping address"
+                      className="w-full p-4 bg-black/40 border border-purple-900/40 rounded-xl text-purple-300 placeholder-purple-600 focus:outline-none focus:border-purple-500/50"
+                      rows="3"
+                    />
+
+                    <select
+                      value={paymentMethod}
+                      onChange={(e) => setPaymentMethod(e.target.value)}
+                      className="w-full p-4 bg-black/40 border border-purple-900/40 rounded-xl text-purple-300 focus:outline-none focus:border-purple-500/50"
+                    >
+                      <option value="COD">Cash on Delivery</option>
+                      <option value="Card">Credit/Debit Card</option>
+                    </select>
+
+                    <div className="flex items-center justify-between p-4 bg-black/60 rounded-xl">
+                      <span className="text-purple-300 font-serif">Total Amount:</span>
+                      <span className="text-2xl font-serif text-purple-300">${calculateTotal().toFixed(2)}</span>
+                    </div>
+
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      onClick={handleCheckout}
+                      disabled={isSubmitting}
+                      className="w-full py-4 bg-gradient-to-r from-purple-900 to-blue-900 text-purple-100 font-serif rounded-xl relative overflow-hidden group"
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      <span className="relative flex items-center justify-center gap-2">
+                        {isSubmitting ? (
+                          <>Processing...</>
+                        ) : (
+                          <>
+                            <CreditCard className="w-5 h-5" />
+                            Checkout
+                          </>
+                        )}
+                      </span>
+                    </motion.button>
+                  </div>
+                </motion.div>
+              </>
+            )}
+          </div>
+        </motion.div>
       </div>
     </div>
   );

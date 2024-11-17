@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import 'remixicon/fonts/remixicon.css';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import { AnimatePresence, motion } from 'framer-motion';
 import { a, div } from "framer-motion/client";
 import cartIcon from '../assets/cart.svg'
@@ -48,7 +48,7 @@ export default function Navbar() {
 
 
                         {/* Wishlist  */}
-                        <FlyoutLink2 href='/user/wishlist'>
+                        <FlyoutLink2 href='#'>
                             <div className="   rounded-full flex justify-center cursor-pointer  text-white">
                                 <img src={wishlistIcon} alt="Wishlist" />
                             </div>
@@ -187,7 +187,7 @@ const CategoryContent = () => {
                             onHoverEnd={() => setHoveredIndex(null)}
                         >
                             <motion.a
-                                href={`/products/${category}`}
+                                href={`/products`}
                                 className="relative"
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1, transition: { duration: 0.5 } }} 
@@ -218,17 +218,16 @@ const UserContent = () => {
     const [hoveredIndex, setHoveredIndex] = useState(null);
     const pagesObj = {
         'Profile': '/',
-        'Logout': '/Login',
+        'Logout': '#',
     };
 
     function logout() {
         localStorage.removeItem('token');
-        localStorage.removeItem('id');
-        localStorage.removeItem('role');
+        localStorage.removeItem('userId');
         toast('Logging Out', { icon: '👏' });
         setTimeout(() => {
             navigate('/Login');
-        }, 1500);
+        }, 2000);
     }
 
     return (
@@ -271,12 +270,13 @@ const PageContent = () => {
 
   const pagesObj = {
     "Home": "/",
-    "About Us": "/about",
+    // "About Us": "/about",
     "Products": "/products",
     "Cart": "/user/cart",
-    "Wishlist": "/user/wishlist",
+    "Order History":"user/orders",
+    // "Wishlist": "/user/wishlist",
     "Contact Us": "/contact",
-    "Terms of Service": "/terms-of-service",
+    "Terms of Service": "/tos",
     "Privacy Policy": "/privacy-policy",
   };
 
