@@ -38,6 +38,7 @@ if ($user && password_verify($password, $user['password'])) {
     $token = generateJWT($payload, $secret);
     echo json_encode([
       "message" => "Login successful",
+      "username" => $user['username'],
       "token" => $token,
       "id" => $user['id']
   ]);

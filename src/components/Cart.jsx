@@ -3,6 +3,8 @@ import { Trash2, Plus, Minus, ShoppingCart, Sparkles, CreditCard, Truck, Ticket,
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -86,7 +88,6 @@ const Cart = () => {
   const [paymentMethod, setPaymentMethod] = useState('COD');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const API_URL = 'http://localhost/ca3';
   const userId = localStorage.getItem('userId');
 
   // Fetch cart items and product details
@@ -118,6 +119,7 @@ const Cart = () => {
 
       const cartItemsWithDetails = await Promise.all(productDetailsPromises);
       setCartItems(cartItemsWithDetails);
+      console.log(cartItemsWithDetails);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -127,7 +129,7 @@ const Cart = () => {
 
   // Update cart item quantity
   const updateQuantity = async (productId, newQuantity) => {
-    if (newQuantity < 1) return;
+    if (newQuantity < 0) return;
 
     try {
       const response = await fetch(`${API_URL}/api/update-cart.php`, {
@@ -196,19 +198,30 @@ const Cart = () => {
     return subtotal - discount;
   };
 
-  const applyCoupon = async () => {
-    try {
-      const response = await fetch(`${API_URL}/api/validate-coupon.php?code=${couponCode}`);
-      const data = await response.json();
+  const applyCoupon = () => {
+    const couponMap = {
+      'SAVE10': 0.1,   // 10% off
+      'SAVE20': 0.2,   // 20% off
+      'SAVE50': 0.5,   // 50% off
+    };
 
-      if (!response.ok) {
-        throw new Error(data.message || 'Invalid coupon');
-      }
+    // Validate coupon code
+    if (!couponCode) {
+      toast.error('Please enter a coupon code');
+      return;
+    }
 
-      setDiscount(data.discount);
-      alert(`Coupon applied! Discount: $${data.discount.toFixed(2)}`);
-    } catch (err) {
-      setError(err.message);
+    const discountPercent = couponMap[couponCode.toUpperCase()];
+
+    if (discountPercent !== undefined) {
+      const subtotal = cartItems.reduce((total, item) => total + (item.product.price * item.quantity), 0);
+      const calculatedDiscount = subtotal * discountPercent;
+
+      setDiscount(calculatedDiscount);
+      toast.success(`Coupon applied! You saved $${calculatedDiscount.toFixed(2)}`);
+    } else {
+      toast.error('Invalid coupon code');
+      setDiscount(0);
     }
   };
 
@@ -346,7 +359,7 @@ const Cart = () => {
                     deleteFromCart={deleteFromCart}
                   />
                 ))}
-            
+
                 <motion.div
                   variants={itemVariants}
                   className="mt-8 space-y-6"

@@ -15,11 +15,12 @@ import {
   Stars,
   Sparkles
 } from "lucide-react";
+import ReviewSection from "./Review";
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     y: 0,
     transition: { duration: 0.6 }
   }
@@ -59,8 +60,8 @@ export default function ProductDetails() {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
 
-  const API_URL = 'http://localhost/ca3';
-
+  const API_URL = import.meta.env.VITE_API_URL;
+  
   useEffect(() => {
     const fetchProduct = async (id) => {
       try {
@@ -92,9 +93,9 @@ export default function ProductDetails() {
   }
 
   async function buyNow() {
-    try{
+    try {
       const userId = localStorage.getItem('userId');
-      if(!userId){
+      if (!userId) {
         toast.error('Please login to buy now');
         return;
       }
@@ -103,7 +104,7 @@ export default function ProductDetails() {
       toast('Redirecting to orders page...');
       setTimeout(() => {
         window.location.href = '/user/cart';
-      },1000);
+      }, 1000);
     } catch (error) {
       console.error("Error buying now", error);
       toast.error('Error buying now');
@@ -131,9 +132,8 @@ export default function ProductDetails() {
   return (
     <>
       <div className="min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-purple-900 via-gray-900 to-black relative overflow-hidden py-8">
-        {/* Magical Particles */}
         <div className="fixed inset-0 opacity-40">
-          {[...Array(20)].map((_, i) => (
+          {[...Array(30)].map((_, i) => (
             <motion.div
               key={i}
               className="absolute w-1 h-1 bg-purple-400 rounded-full"
@@ -181,7 +181,7 @@ export default function ProductDetails() {
                 <div className="relative overflow-hidden rounded-2xl border border-purple-900/40 backdrop-blur-xl">
                   <motion.img
                     initial={{ opacity: 0, scale: 1.1 }}
-                    animate={{ 
+                    animate={{
                       opacity: imageLoaded ? 1 : 0,
                       scale: imageLoaded ? 1 : 1.1
                     }}
@@ -193,7 +193,7 @@ export default function ProductDetails() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
                 </div>
-                
+
                 {product.discount > 0 && (
                   <motion.div
                     initial={{ scale: 0 }}
@@ -285,6 +285,7 @@ export default function ProductDetails() {
               </motion.div>
             </div>
           </motion.div>
+          <ReviewSection productId={id} />
         </div>
       </div>
     </>

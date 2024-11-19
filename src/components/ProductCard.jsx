@@ -1,64 +1,105 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
+import { Eye } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-function ProductCard({ product }) {
+const ProductCard = ({ product }) => {
   const discountedPrice = product.price - (product.price * product.discount) / 100;
 
   return (
-    <div className="max-w-96 rounded-xl overflow-hidden shadow-xl border border-gray-700 transition-transform transform hover:scale-105 hover:shadow-2xl bg-white">
-      {/* Discount badge */}
+    <div className="group relative w-full max-w-sm bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+      {/* Discount Tag */}
       {product.discount > 0 && (
         <div className="absolute top-4 left-4 z-10">
           <motion.div
             initial={{ rotate: -10 }}
             animate={{ rotate: [0, -5, 5, -5, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg backdrop-blur-sm"
+            transition={{ duration: 1.5, repeat: Infinity }}
+            className="bg-red-500 text-white px-3 py-1 rounded-full text-xs font-semibold shadow-lg"
           >
             {product.discount}% OFF
           </motion.div>
         </div>
+
       )}
-      <div className="w-full h-60 relative overflow-hidden bg-white p-4">
+
+      {/* Image Container */}
+      <div className="relative h-64 bg-gray-50 p-6">
+        <div className="absolute top-4 right-4 z-10">
+          <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-indigo-50 text-indigo-700">
+            {product.category}
+          </span>
+        </div>
         <img
-          className="w-full h-full object-contain transition-transform duration-300 ease-in-out hover:scale-110 cursor-pointer"
+          className="w-full h-full object-contain transform transition-transform duration-300 group-hover:scale-105"
           src={product.image}
           alt={product.title}
-          onClick={() => window.location.href = `/products/${product.id}`}
         />
+        {/* Quick View Button */}
+        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-black/50 transition-opacity duration-300">
+          <Link
+            to={`/products/${product.id}`}
+            className="bg-white text-gray-900 px-5 py-2 rounded-lg font-medium text-sm shadow-md hover:bg-gray-100 transition duration-200"
+          >
+            <Eye className="inline-block w-4 h-4 mr-2" />
+            Quick View
+          </Link>
+        </div>
       </div>
-      <div className="px-4 py-4">
-        <h2 className="font-bold text-lg text-black truncate">{product.title}</h2>
-        <p className="text-xs text-black mt-1 truncate">{product.description.slice(0, 100)}...</p>
 
-        <div className="mt-3 text-black text-sm">
-          <p className="mb-1"><span className="font-semibold">Brand:</span> {product.brand}</p>
-          <p className="mb-1"><span className="font-semibold">Model:</span> {product.model}</p>
-          <p className="mb-1"><span className="font-semibold">Color:</span> {product.color}</p>
-          <p className="mb-1"><span className="font-semibold">Category:</span> {product.category}</p>
+      {/* Content */}
+      <div className="p-6">
+        {/* Title and Description */}
+        <div className="mb-4">
+          <h3
+            className="text-lg font-semibold text-gray-900 leading-tight mb-1 truncate"
+            title={product.title}
+          >
+            {product.title}
+          </h3>
+          <p
+            className="text-sm text-gray-500 line-clamp-2"
+            style={{
+              display: '-webkit-box',
+              WebkitBoxOrient: 'vertical',
+              WebkitLineClamp: 2,
+              overflow: 'hidden',
+            }}
+            title={product.description}
+          >
+            {product.description}
+          </p>
         </div>
 
-        <div className="mt-3">
-          <span className="text-xl font-bold text-indigo-400">${discountedPrice.toFixed(2)}</span>
+        {/* Price */}
+        <div className="flex items-baseline mb-6">
+          <span className="text-2xl font-bold text-gray-900">
+            ${discountedPrice.toFixed(2)}
+          </span>
           {product.discount > 0 && (
-            <span className="ml-2 line-through text-gray-500">${product.price.toFixed(2)}</span>
+            <span className="ml-2 text-sm text-gray-500 line-through">
+              ${product.price.toFixed(2)}
+            </span>
           )}
-          <span className="ml-2 text-sm text-red-500">Save {product.discount}%</span>
         </div>
 
-        <div className="mt-4 flex justify-between items-center">
-          <Link to={`/products/${product.id}`}>
-            <button className="bg-indigo-500 hover:bg-indigo-900 text-white text-sm font-semibold py-2 px-4 rounded-lg transition duration-200 flex items-center">
-              <i className="ri-eye-line"></i> <span className="ml-1">View Details</span>
+        {/* Buttons */}
+        <div className="flex gap-3">
+          <Link
+            to={`/products/${product.id}`}
+            className="flex-1"
+          >
+            <button className="w-full bg-black hover:bg-gray-800 text-white px-4 py-2.5 rounded-lg text-sm font-medium transition-colors duration-200">
+              View Details
             </button>
           </Link>
-          <button className="bg-gray-600 hover:bg-gray-700 text-white text-sm font-semibold py-2 px-4 rounded-lg transition duration-200 flex items-center">
-            <i className="ri-amazon-line"></i> <span className="ml-1">Amazon</span>
+          <button className="px-4 py-2.5 rounded-lg text-sm font-medium border border-gray-200 hover:border-gray-300 hover:bg-gray-50 transition-colors duration-200">
+            Amazon
           </button>
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default ProductCard;

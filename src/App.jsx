@@ -5,6 +5,7 @@ import Main from './components/Main';
 import AdminDashboard from './admin/AdminDashboard';
 import ProductShowcaseWrapper from './components/Products';
 import MagicalToaster from './components/MagicalToaster';
+import AdminProtectedRoute from './components/adminProtectedRoute';
 
 
 function App() {
@@ -12,7 +13,7 @@ function App() {
     <>
     <Routes>
       <Route path="/*" element={<Main />} />
-      <Route path='/admin/*' element={<AdminDashboard />} />
+      <Route path='/admin/*' element={<AdminProtectedRoute component={AdminDashboard} />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
     </Routes>

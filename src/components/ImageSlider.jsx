@@ -83,14 +83,14 @@ export default function ImageSlider() {
               </motion.h2>
 
               <a href='/products'>
-              <motion.button
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.7 }}
-                className="px-4 py-2 text-sm md:text-lg bg-indigo-500 hover:bg-white hover:text-black transition"
-              >
-                Shop Now
-              </motion.button>
+                <motion.button
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.7 }}
+                  className="px-4 py-2 text-sm md:text-lg bg-indigo-500 hover:bg-white hover:text-black transition"
+                >
+                  Shop Now
+                </motion.button>
               </a>
             </div>
           </div>
@@ -102,9 +102,8 @@ export default function ImageSlider() {
         {slides.map((_, index) => (
           <button
             key={index}
-            className={`w-3 h-3 rounded-full ${
-              currentIndex === index ? 'bg-blue-500' : 'bg-gray-300'
-            }`}
+            className={`w-3 h-3 rounded-full ${currentIndex === index ? 'bg-blue-500' : 'bg-gray-300'
+              }`}
             onClick={() => setCurrentIndex(index)}
           />
         ))}

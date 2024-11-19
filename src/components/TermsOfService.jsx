@@ -55,7 +55,7 @@ const TermsSection = ({ title, children, icon: Icon }) => {
       className="group flex items-start gap-4 p-8 bg-black/50 rounded-xl border border-purple-900/40 hover:border-purple-500/50 backdrop-blur-xl relative overflow-hidden"
     >
       <div className="absolute inset-0 bg-gradient-to-r from-purple-900/10 to-blue-900/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-      <motion.div 
+      <motion.div
         className="p-3 bg-purple-950/80 rounded-xl relative shrink-0"
         whileHover={{ rotate: [0, -10, 10, -10, 0], scale: 1.1 }}
         transition={{ duration: 0.8 }}
@@ -102,7 +102,7 @@ export default function TermsOfService() {
         animate={{ opacity: 1, y: 0 }}
         className="relative py-32 px-4"
       >
-        <motion.div 
+        <motion.div
           {...glowAnimation}
           className="absolute inset-0 bg-gradient-to-r from-purple-900/20 to-blue-900/20 blur-3xl"
         />
@@ -114,7 +114,7 @@ export default function TermsOfService() {
             <Stars className="w-5 h-5 text-purple-400" />
             <span className="text-sm text-purple-300 font-serif">Last Updated: November 2024</span>
           </motion.div>
-          
+
           <motion.h1
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -141,8 +141,8 @@ export default function TermsOfService() {
       >
         <TermsSection title="Welcome to Square" icon={Wand2}>
           <p>
-            These Terms of Service govern your access to and use of Square's products and services. 
-            By accessing or using our services, you agree to be bound by these terms and our privacy policy. 
+            These Terms of Service govern your access to and use of Square's products and services.
+            By accessing or using our services, you agree to be bound by these terms and our privacy policy.
             Please take the time to read them carefully.
           </p>
         </TermsSection>

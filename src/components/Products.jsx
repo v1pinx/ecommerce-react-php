@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import { motion } from 'framer-motion';
 import { Search, Filter, Package, Sparkles, ChevronLeft, ChevronRight, Stars } from 'lucide-react';
 
-const API_URL = 'http://localhost/ca3';
+const API_URL = import.meta.env.VITE_API_URL;
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -86,7 +86,7 @@ const ProductShowcase = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get(`${API_URL}/api/getCategory.php`);   
+        const response = await axios.get(`${API_URL}/api/getCategory.php`);
         setCategories(response.data);
       } catch (error) {
         console.error('Error fetching categories:', error);
@@ -181,7 +181,7 @@ const ProductShowcase = () => {
         animate={{ opacity: 1, y: 0 }}
         className="relative py-32 px-4"
       >
-        <motion.div 
+        <motion.div
           animate={{
             opacity: [0.4, 1, 0.4],
             scale: [1, 1.1, 1],
@@ -208,7 +208,7 @@ const ProductShowcase = () => {
             <Stars className="w-5 h-5 text-purple-400" />
             <span className="text-sm text-purple-300 font-serif">Discover Our Magical Collection</span>
           </motion.div>
-          
+
           <motion.h1
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}

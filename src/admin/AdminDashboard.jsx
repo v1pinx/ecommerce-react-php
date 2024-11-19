@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BarChart, ShoppingCart, Package, Users, DollarSign, Activity, Search, Bell, Settings, LogOut, ChevronDown, Filter } from 'lucide-react';
 
-const API_URL = 'http://localhost/ca3'
+const API_URL = import.meta.env.VITE_API_URL;
+
 // Dashboard Home Component
 const Dashboard = () => {
     const [stats, setStats] = useState({

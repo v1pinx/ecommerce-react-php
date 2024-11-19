@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ShoppingBag, Package, Calendar, CreditCard, Clock, ChevronDown, ChevronUp, Stars, Sparkles } from 'lucide-react';
-const API_URL = 'http://localhost/ca3';
+
+const API_URL = import.meta.env.VITE_API_URL;
 
 const containerVariants = {
   hidden: { opacity: 0 },

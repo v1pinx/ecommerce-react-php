@@ -4,65 +4,65 @@ import 'remixicon/fonts/remixicon.css';
 import toast from 'react-hot-toast';
 import { AnimatePresence, motion } from 'framer-motion';
 import { a, div } from "framer-motion/client";
-import cartIcon from '../assets/cart.svg'
-import wishlistIcon from '../assets/wishlist.svg'
-import profileIcon from '../assets/profile.svg'
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { Heart } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
+import { UserRound } from "lucide-react";
 
-const API_URL = 'http://localhost/ca3'
+const API_URL = import.meta.env.VITE_API_URL;
 
 export default function Navbar() {
     return (
         <>
-            <nav className="flex justify-between items-center bg-black px-8 sm:px-16 py-4 shadow-md absolute w-full z-10">
+            <nav className="flex justify-around items-center bg-black px-8 sm:px-16 py-4 shadow-md absolute w-full z-10">
                 <a href="/">
-                    <div className="font-semibold text-3xl text-white">Square</div>
+                    <div className="font-extrabold text-3xl text-white">Square</div>
                 </a>
                 <div className="flex gap-6 text-white">
                     <FlyoutLink2 href="/">Home</FlyoutLink2>
                     <FlyoutLink
-                            href="/products"
-                            FlyoutContent={CategoryContent}
-                        >
-                            Products
-                        </FlyoutLink>
-                        <FlyoutLink
-                            href="/"
-                            FlyoutContent={PageContent}
-                        >
-                            Pages
-                        </FlyoutLink>
+                        href="/products"
+                        FlyoutContent={CategoryContent}
+                    >
+                        Products
+                    </FlyoutLink>
+                    <FlyoutLink
+                        href="/"
+                        FlyoutContent={PageContent}
+                    >
+                        Pages
+                    </FlyoutLink>
                 </div>
-                <div className="flex gap-3">
-                        {/* User profile  */}
+                <div className="flex gap-2">
+                    {/* User profile  */}
 
-                        <div className="rounded-full flex justify-center cursor-pointer  text-white">
-                            <FlyoutLink 
+                    <div className="rounded-full flex justify-center cursor-pointer  text-white">
+                        <FlyoutLink
                             href='#'
                             FlyoutContent={UserContent}
-                            >
-                                <img src={profileIcon} alt="Profile" />
-                                </FlyoutLink>
-                        </div>
-
-
-                        {/* Wishlist  */}
-                        <FlyoutLink2 href='#'>
-                            <div className="   rounded-full flex justify-center cursor-pointer  text-white">
-                                <img src={wishlistIcon} alt="Wishlist" />
-                            </div>
-                        </FlyoutLink2>
-
-                        {/* User cart */}
-                        <FlyoutLink2 href='/user/cart'>
-                            <div className="rounded-full flex justify-center cursor-pointer  text-white">
-                                <img src={cartIcon} alt="Cart" />
-                            </div>
-                        </FlyoutLink2>
+                        >
+                            <UserRound />
+                        </FlyoutLink>
                     </div>
+
+
+                    {/* Wishlist  */}
+                    <FlyoutLink2 href='#'>
+                        <div className="   rounded-full flex justify-center cursor-pointer  text-white">
+                            <Heart></Heart>
+                        </div>
+                    </FlyoutLink2>
+
+                    {/* User cart */}
+                    <FlyoutLink2 href='/user/cart'>
+                        <div className="rounded-full flex justify-center cursor-pointer  text-white" title="Cart">
+                            <ShoppingCart></ShoppingCart>
+                        </div>
+                    </FlyoutLink2>
+                </div>
             </nav>
-            </>
+        </>
     )
 
 }
@@ -99,7 +99,7 @@ const FlyoutLink2 = ({ children, href }) => {
                         transition={{ duration: 0.3, ease: 'easeOut' }}
                         className="absolute left-1/2 top-12 b-white text-black ">
                         <div className="absolute -top-6 left-0 right-0 h-6 "></div>
-                        
+
                     </motion.div>
                 )}
             </AnimatePresence>
@@ -149,17 +149,17 @@ const FlyoutLink = ({ children, href, FlyoutContent }) => {
 
 const CategoryContent = () => {
     const [hoveredIndex, setHoveredIndex] = useState(null);
-    const [categories, setCategories] = useState([]); 
-    const [loading, setLoading] = useState(true);  
+    const [categories, setCategories] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchCategories = async () => {
             try {
                 const response = await axios.get(`${API_URL}/api/getCategory.php`);
                 if (response.data && Array.isArray(response.data)) {
-                    setCategories(response.data); 
+                    setCategories(response.data);
                 } else {
-                    setCategories([]); 
+                    setCategories([]);
                 }
             } catch (error) {
                 console.error("Error fetching categories:", error);
@@ -169,7 +169,7 @@ const CategoryContent = () => {
         };
         fetchCategories();
     }, []);
-    
+
     if (loading) {
         return <div className="text-white">Loading categories...</div>;
     }
@@ -182,7 +182,7 @@ const CategoryContent = () => {
                         <motion.div
                             key={index}
                             className="relative"
-                            whileHover={{ scale: 1.1 }} 
+                            whileHover={{ scale: 1.1 }}
                             onHoverStart={() => setHoveredIndex(index)}
                             onHoverEnd={() => setHoveredIndex(null)}
                         >
@@ -190,7 +190,7 @@ const CategoryContent = () => {
                                 href={`/products`}
                                 className="relative"
                                 initial={{ opacity: 0 }}
-                                animate={{ opacity: 1, transition: { duration: 0.5 } }} 
+                                animate={{ opacity: 1, transition: { duration: 0.5 } }}
                             >
                                 {category.charAt(0).toUpperCase() + category.slice(1)}
                             </motion.a>
@@ -205,7 +205,7 @@ const CategoryContent = () => {
                         </motion.div>
                     ))
                 ) : (
-                    <div className="text-white">Loading...</div>  
+                    <div className="text-white">Loading...</div>
                 )}
             </div>
         </div>
@@ -216,8 +216,10 @@ const CategoryContent = () => {
 const UserContent = () => {
     const navigate = useNavigate();
     const [hoveredIndex, setHoveredIndex] = useState(null);
+    
+    let name = localStorage.getItem('name') || "User";
     const pagesObj = {
-        'Profile': '/',
+        [name]: '#',
         'Logout': '#',
     };
 
@@ -266,46 +268,46 @@ const UserContent = () => {
 }
 
 const PageContent = () => {
-  const [hoveredIndex, setHoveredIndex] = useState(null);
+    const [hoveredIndex, setHoveredIndex] = useState(null);
 
-  const pagesObj = {
-    "Home": "/",
-    // "About Us": "/about",
-    "Products": "/products",
-    "Cart": "/user/cart",
-    "Order History":"user/orders",
-    // "Wishlist": "/user/wishlist",
-    "Contact Us": "/contact",
-    "Terms of Service": "/tos",
-    "Privacy Policy": "/privacy-policy",
-  };
+    const pagesObj = {
+        "Home": "/",
+        // "About Us": "/about",
+        "Products": "/products",
+        "Cart": "/user/cart",
+        "Order History": "user/orders",
+        // "Wishlist": "/user/wishlist",
+        "Contact Us": "/contact",
+        "Terms of Service": "/tos",
+        "Privacy Policy": "/privacy-policy",
+    };
 
-  return (
-    <div className="w-48 bg-black px-6 py-4 shadow-2xl -left-8 absolute">
-      <div className="space-y-2 text-white">
-        {Object.entries(pagesObj).map(([key, url], index) => (
-          <motion.div
-            key={index}
-            className="relative"
-            whileHover={{ scale: 1.1 }}
-          >
-            <Link
-              to={url} // Use Link from react-router-dom
-              onMouseEnter={() => setHoveredIndex(index)}
-              onMouseLeave={() => setHoveredIndex(null)}
-              className="block w-full"
-            >
-              {key.charAt(0).toUpperCase() + key.slice(1)} {/* Capitalizing first letter */}
-            </Link>
-            <span
-              style={{
-                transform: hoveredIndex === index ? "scaleX(1)" : "scaleX(0)",
-              }}
-              className="absolute -bottom-1 -left-2 -right-2 h-[0.05rem] origin-right rounded-full bg-indigo-300 transition-transform duration-300 ease-out"
-            ></span>
-          </motion.div>
-        ))}
-      </div>
-    </div>
-  );
+    return (
+        <div className="w-48 bg-black px-6 py-4 shadow-2xl -left-8 absolute">
+            <div className="space-y-2 text-white">
+                {Object.entries(pagesObj).map(([key, url], index) => (
+                    <motion.div
+                        key={index}
+                        className="relative"
+                        whileHover={{ scale: 1.1 }}
+                    >
+                        <Link
+                            to={url} // Use Link from react-router-dom
+                            onMouseEnter={() => setHoveredIndex(index)}
+                            onMouseLeave={() => setHoveredIndex(null)}
+                            className="block w-full"
+                        >
+                            {key.charAt(0).toUpperCase() + key.slice(1)} {/* Capitalizing first letter */}
+                        </Link>
+                        <span
+                            style={{
+                                transform: hoveredIndex === index ? "scaleX(1)" : "scaleX(0)",
+                            }}
+                            className="absolute -bottom-1 -left-2 -right-2 h-[0.05rem] origin-right rounded-full bg-indigo-300 transition-transform duration-300 ease-out"
+                        ></span>
+                    </motion.div>
+                ))}
+            </div>
+        </div>
+    );
 };

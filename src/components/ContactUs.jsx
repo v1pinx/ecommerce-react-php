@@ -51,7 +51,7 @@ const ContactMethod = ({ icon: Icon, title, content }) => (
     className="group flex items-center gap-4 p-6 bg-black/50 rounded-xl border border-purple-900/40 hover:border-purple-500/50 backdrop-blur-xl relative overflow-hidden"
   >
     <div className="absolute inset-0 bg-gradient-to-r from-purple-900/10 to-blue-900/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-    <motion.div 
+    <motion.div
       className="p-3 bg-purple-950/80 rounded-xl relative"
       whileHover={{ rotate: [0, -10, 10, -10, 0], scale: 1.1 }}
       transition={{ duration: 0.8 }}
@@ -127,7 +127,7 @@ export default function ContactUs() {
         animate={{ opacity: 1, y: 0 }}
         className="relative py-32 px-4"
       >
-        <motion.div 
+        <motion.div
           {...glowAnimation}
           className="absolute inset-0 bg-gradient-to-r from-purple-900/20 to-blue-900/20 blur-3xl"
         />
@@ -139,7 +139,7 @@ export default function ContactUs() {
             <Stars className="w-5 h-5 text-purple-400" />
             <span className="text-sm text-purple-300 font-serif">We typically respond within 24 hours</span>
           </motion.div>
-          
+
           <motion.h1
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -173,7 +173,7 @@ export default function ContactUs() {
             <div className="absolute inset-0 bg-gradient-to-br from-purple-900/10 to-blue-900/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
             <div className="relative">
               <div className="flex items-center gap-4 mb-8">
-                <motion.div 
+                <motion.div
                   className="p-3 bg-purple-950/80 rounded-xl"
                   animate={{
                     rotate: [0, 10, -10, 10, 0],
@@ -187,36 +187,36 @@ export default function ContactUs() {
                   <Wand2 className="w-6 h-6 text-purple-400" />
                 </motion.div>
                 <h2 className="text-2xl font-serif font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-                Send Us a Message
+                  Send Us a Message
                 </h2>
               </div>
-              
+
               <form onSubmit={handleSubmit} className="space-y-8">
                 <MagicalInput
                   label="Your Name"
                   type="text"
                   placeholder="What should we call you?"
                   value={formState.name}
-                  onChange={(e) => setFormState({...formState, name: e.target.value})}
+                  onChange={(e) => setFormState({ ...formState, name: e.target.value })}
                   Icon={GhostIcon}
                 />
-                
+
                 <MagicalInput
                   label="Your Email"
                   type="email"
                   placeholder="Where can we reach you?"
                   value={formState.email}
-                  onChange={(e) => setFormState({...formState, email: e.target.value})}
+                  onChange={(e) => setFormState({ ...formState, email: e.target.value })}
                   Icon={Skull}
                 />
-                
+
                 <div className="relative">
                   <label className="block text-purple-300 mb-2 font-serif">Your Message</label>
                   <div className="relative group">
                     <textarea
                       rows="5"
                       value={formState.message}
-                      onChange={(e) => setFormState({...formState, message: e.target.value})}
+                      onChange={(e) => setFormState({ ...formState, message: e.target.value })}
                       className="w-full p-4 pl-12 bg-black/40 border border-purple-900/40 rounded-xl focus:outline-none focus:border-purple-500/50 text-gray-200 placeholder-gray-500 focus:ring-2 focus:ring-purple-500/20 transition-all duration-300"
                       placeholder="Tell us what's on your mind?"
                       required
@@ -224,7 +224,7 @@ export default function ContactUs() {
                     <Flame className="absolute left-4 top-4 w-5 h-5 text-purple-500/50 group-hover:text-purple-400 transition-colors duration-300" />
                   </div>
                 </div>
-                
+
                 <motion.button
                   type="submit"
                   disabled={isSubmitting}
@@ -249,19 +249,19 @@ export default function ContactUs() {
                 Other Ways to Reach us
               </h2>
             </motion.div>
-            
+
             <ContactMethod
               icon={Skull}
               title="Call or Text"
               content="+1 666 999 000"
             />
-            
+
             <ContactMethod
               icon={GhostIcon}
               title="Email Us"
               content="support@square.com"
             />
-            
+
             <ContactMethod
               icon={Flame}
               title="Visit Our Office"

@@ -51,8 +51,6 @@ try {
 
     // Update the product's quantity or remove it
     if ($cart[$productIndex]['quantity'] > 1) {
-        $cart[$productIndex]['quantity'] -= 1;
-    } else {
         array_splice($cart, $productIndex, 1); // Remove the product
     }
 

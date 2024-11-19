@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Lock, Stars, Sparkles, GhostIcon } from 'lucide-react';
 import axios from "axios";
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
+
+const API_URL = import.meta.env.VITE_API_URL;
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -54,7 +56,12 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const API_URL = 'http://localhost/ca3';
+
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      window.location.href = '/'; // Pure localstorage vulnerability, I have to change it later
+    }
+  })
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -67,6 +74,10 @@ export default function Login() {
       });
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('userId', response.data.id);
+      localStorage.setItem('name', response.data.username);
+      if (email == "admin@gmail.com") {
+        localStorage.setItem('admin', true); // Vulnerable, I have to change it later
+      }
       toast.success(response.data.message);
 
       setTimeout(() => {
@@ -123,8 +134,8 @@ export default function Login() {
             <Stars className="w-5 h-5 text-purple-400" />
             <span className="text-sm text-purple-300 font-serif">Welcome back!</span>
           </motion.div>
-          
-          
+
+
         </div>
 
         {/* Login Form */}
@@ -148,7 +159,7 @@ export default function Login() {
               onChange={(e) => setEmail(e.target.value)}
               Icon={Mail}
             />
-            
+
             <MagicalInput
               label="Password"
               type="password"
@@ -156,7 +167,7 @@ export default function Login() {
               onChange={(e) => setPassword(e.target.value)}
               Icon={Lock}
             />
-            
+
             <motion.button
               type="submit"
               disabled={isSubmitting}

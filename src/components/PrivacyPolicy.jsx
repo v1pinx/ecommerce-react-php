@@ -55,7 +55,7 @@ const PrivacySection = ({ title, children, icon: Icon }) => {
       className="group flex items-start gap-4 p-8 bg-black/50 rounded-xl border border-purple-900/40 hover:border-purple-500/50 backdrop-blur-xl relative overflow-hidden"
     >
       <div className="absolute inset-0 bg-gradient-to-r from-purple-900/10 to-blue-900/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-      <motion.div 
+      <motion.div
         className="p-3 bg-purple-950/80 rounded-xl relative shrink-0"
         whileHover={{ rotate: [0, -10, 10, -10, 0], scale: 1.1 }}
         transition={{ duration: 0.8 }}
@@ -102,7 +102,7 @@ export default function PrivacyPolicy() {
         animate={{ opacity: 1, y: 0 }}
         className="relative py-32 px-4"
       >
-        <motion.div 
+        <motion.div
           {...glowAnimation}
           className="absolute inset-0 bg-gradient-to-r from-purple-900/20 to-blue-900/20 blur-3xl"
         />
@@ -114,7 +114,7 @@ export default function PrivacyPolicy() {
             <Stars className="w-5 h-5 text-purple-400" />
             <span className="text-sm text-purple-300 font-serif">Last Updated: November 2024</span>
           </motion.div>
-          
+
           <motion.h1
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -141,7 +141,7 @@ export default function PrivacyPolicy() {
       >
         <PrivacySection title="Data Collection" icon={Wand2}>
           <p>
-            We collect personal information when you use our services, such as your name, email address, and usage data. 
+            We collect personal information when you use our services, such as your name, email address, and usage data.
             This information helps us provide you with a better experience and improve our services.
           </p>
         </PrivacySection>

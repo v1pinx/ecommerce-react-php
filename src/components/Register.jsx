@@ -75,7 +75,7 @@ export default function Register() {
     password: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const API_URL = 'http://localhost/ca3';
+  const API_URL = import.meta.env.VITE_API_URL;
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -237,12 +237,6 @@ export default function Register() {
           </p>
         </motion.div>
       </motion.div>
-      <Toaster
-        position="top-right"
-        reverseOrder={false}
-      />
-
-
     </div>
   );
 }

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import axios from 'axios';
-const API_URL = 'http://localhost/ca3'
 
+const API_URL = import.meta.env.VITE_API_URL;
 
 const ProtectedRoute = ({ component: Component }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(null);

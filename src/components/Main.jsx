@@ -13,13 +13,13 @@ import PrivacyPolicy from "./PrivacyPolicy";
 import Darkness from "./Darkness";
 
 export default function Main() {
-    
+
     return (
         <>
             <Navbar />
             <Routes>
-                <Route path="/" element={<ProtectedRoute component={Home}  />} />
-                <Route path="/products" element={<ProductShowcaseWrapper/>} />
+                <Route path="/" element={<ProtectedRoute component={Home} />} />
+                <Route path="/products" element={<ProductShowcaseWrapper />} />
                 <Route path="/products/:id" element={<ProductDetails />} />
                 <Route path='/user/cart' element={<ProtectedRoute component={Cart} />} />
                 <Route path='/user/orders' element={<ProtectedRoute component={OrderHistory} />} />
@@ -27,7 +27,7 @@ export default function Main() {
                 <Route path="/tos" element={<TermsOfService />} />
                 <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                 <Route path="/darkness" element={<Darkness />} />
-                
+
             </Routes>
 
         </>

@@ -4,10 +4,10 @@ export default function LimitedTimeOffer() {
             <h2 className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-500 text-3xl sm:text-5xl font-bold mb-4">
                 Limited Time Offer 🚀
             </h2>
-            <div className="flex flex-col md:flex-row gap-6 justify-center mt-8">
+            {/* <div className="flex flex-col md:flex-row gap-6 justify-center mt-8">
                 <ProductCard />
                 <ProductCard />
-            </div>
+            </div> */}
             <Banner />
         </div>
     );

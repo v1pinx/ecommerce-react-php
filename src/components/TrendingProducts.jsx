@@ -2,13 +2,15 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import ProductCard from './ProductCard';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export default function TrendingProducts() {
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await axios.get('http://localhost/ca3/api/products.php?limit=3');
+                const response = await axios.get(`${API_URL}/api/products.php?limit=3`);
                 setProducts(response.data);
             } catch (error) {
                 console.error('Error fetching data', error);
@@ -53,9 +55,9 @@ const DiscountBanner = () => (
                 </div>
                 {/* <form className="mt-4">
                     <input type="hidden" name="id" value="49045816312081" /> */}
-                    <button className="px-4 py-2 text-sm md:text-lg bg-blue-500 hover:bg-white hover:text-black transition text-white mt-4" onClick={() => window.location.href = '/products'}> 
-                        Shop Now
-                    </button>
+                <button className="px-4 py-2 text-sm md:text-lg bg-blue-500 hover:bg-white hover:text-black transition text-white mt-4" onClick={() => window.location.href = '/products'}>
+                    Shop Now
+                </button>
                 {/* </form> */}
             </div>
         </div>
