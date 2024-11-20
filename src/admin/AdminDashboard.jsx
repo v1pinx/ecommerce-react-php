@@ -433,6 +433,84 @@ const Products = () => {
     );
 };
 
+const FormQuery = () => {
+    const [queries, setQueries] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchQueries = async () => {
+            try {
+                const response = await fetch(`${API_URL}/api/form.php`);
+
+                if (response.ok) {
+                    const data = await response.json();
+                    setQueries(data.forms);
+                } else {
+                    throw new Error('Failed to fetch queries');
+                }
+            } catch (error) {
+                setError(error.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchQueries();
+    }, []);
+
+    if (loading) {
+        return (
+            <div className="flex justify-center items-center min-h-screen py-10">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="bg-red-50 border-l-4 border-red-500 p-4 m-4">
+                <div className="flex">
+                    <div className="ml-3">
+                        <p className="text-red-700">{error}</p>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    return (
+        <div>
+            <h2 className="text-2xl font-semibold mb-4">Form Queries</h2>
+            <table className="min-w-full bg-white border border-gray-200 rounded-lg">
+                <thead>
+                    <tr>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Message</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {queries.map((query) => (
+                        <tr key={query.id} className="border-t">
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{query.id}</td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{query.name}</td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{query.email}</td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{query.message}</td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                {new Date(query.created_at).toLocaleDateString()}
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
+    );
+};
+
+
 
 // Main Admin Dashboard
 const AdminDashboard = () => {
@@ -449,6 +527,7 @@ const AdminDashboard = () => {
                     <SidebarItem icon={<BarChart />} label="Dashboard" isActive={activeTab === 'dashboard'} onClick={() => setActiveTab('dashboard')} />
                     <SidebarItem icon={<ShoppingCart />} label="Orders" isActive={activeTab === 'orders'} onClick={() => setActiveTab('orders')} />
                     <SidebarItem icon={<Package />} label="Products" isActive={activeTab === 'products'} onClick={() => setActiveTab('products')} />
+                    <SidebarItem icon={<Search />} label="Form Queries" isActive={activeTab === 'queries'} onClick={() => setActiveTab('queries')} />
                 </nav>
             </div>
 
@@ -457,6 +536,7 @@ const AdminDashboard = () => {
                 {activeTab === 'dashboard' && <Dashboard />}
                 {activeTab === 'orders' && <Orders />}
                 {activeTab === 'products' && <Products />}
+                {activeTab === 'queries' && <FormQuery />}
             </div>
         </div>
     );

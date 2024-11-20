@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Skull, Scroll, GhostIcon, Flame, Moon, Sparkles, Heart, CandlestickChart, Stars, Wand2 } from 'lucide-react';
+import toast from 'react-hot-toast';
+
+const API_URL = import.meta.env.VITE_API_URL;
+
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -93,11 +97,36 @@ export default function ContactUs() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    setIsSubmitting(false);
-    setFormState({ name: '', email: '', message: '' });
+  
+    const formData = {
+      name: formState.name,
+      email: formState.email,
+      message: formState.message,
+    };
+  
+    try {
+      const response = await fetch(`${API_URL}/api/form.php`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+  
+      if (response.ok) {
+        const result = await response.json();
+        setFormState({ name: '', email: '', message: '' });
+        toast.success(result.message);
+      } else {
+        console.error('Error:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
-
+  
   return (
     <div className="min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-purple-900 via-gray-900 to-black relative overflow-hidden">
       {/* Magical Particles */}

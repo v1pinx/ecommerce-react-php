@@ -226,6 +226,8 @@ const UserContent = () => {
     function logout() {
         localStorage.removeItem('token');
         localStorage.removeItem('userId');
+        localStorage.removeItem('name');
+        localStorage.removeItem('admin');
         toast('Logging Out', { icon: '👏' });
         setTimeout(() => {
             navigate('/Login');
