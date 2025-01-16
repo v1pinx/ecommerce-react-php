@@ -1,8 +1,13 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# E-Commerce Project - SQUARE
 
-Currently, two official plugins are available:
+This project initially started with **Next.js** as the frontend framework but later transitioned to **React** for the frontend and **PHP** for backend APIs due to certain circumstances.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Previous Next.js Version
+
+The original Next.js version of the project can be found [here](https://github.com/v1pinx/ecommerce-platform). _(Note: This version is incomplete.)_
+
+## Current Stack
+
+-   **Frontend**: React
+-   **Backend**: PHP (for APIs)
