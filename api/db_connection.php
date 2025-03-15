@@ -1,5 +1,5 @@
 <?php
-$conn = new mysqli("mysql-server", "root", "root", "square");
+$conn = new mysqli("mysql-db", "root", "root", "square");
 
 
 if ($conn->connect_error) {
