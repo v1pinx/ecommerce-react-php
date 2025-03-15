@@ -86,7 +86,7 @@ export default function Register() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch(`${API_URL}/api/register.php`, {
+      const response = await fetch(`${API_URL}/register.php`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
@@ -112,34 +112,6 @@ export default function Register() {
 
   return (
     <div className="min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-purple-900 via-gray-900 to-black relative overflow-hidden flex items-center justify-center">
-      {/* Orbital Background */}
-      <div className="fixed inset-0 flex items-center justify-center">
-        <OrbitalRing size={200} duration={15} opacity={0.1} />
-        <OrbitalRing size={300} duration={20} delay={1} opacity={0.08} />
-        <OrbitalRing size={400} duration={25} delay={2} opacity={0.06} />
-        <OrbitalRing size={500} duration={30} delay={3} opacity={0.04} />
-      </div>
-
-      {/* Floating Particles */}
-      <div className="fixed inset-0 opacity-40">
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-purple-400 rounded-full"
-            animate={{
-              scale: [1, 2, 1],
-              opacity: [0.3, 0.8, 0.3],
-              y: [Math.random() * 100, Math.random() * window.innerHeight],
-              x: [Math.random() * 100, Math.random() * window.innerWidth],
-            }}
-            transition={{
-              duration: Math.random() * 8 + 5,
-              repeat: Infinity,
-              ease: "linear"
-            }}
-          />
-        ))}
-      </div>
 
       <motion.div
         variants={containerVariants}

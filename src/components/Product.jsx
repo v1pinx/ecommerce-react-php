@@ -65,7 +65,7 @@ export default function ProductDetails() {
   useEffect(() => {
     const fetchProduct = async (id) => {
       try {
-        const response = await axios.get(`${API_URL}/api/getProductById.php?id=${id}`);
+        const response = await axios.get(`${API_URL}/getProductById.php?id=${id}`);
         setProduct(response.data.product);
       } catch (error) {
         console.error("Error fetching product", error);
@@ -84,7 +84,7 @@ export default function ProductDetails() {
         toast.error('Please login to add to cart');
         return;
       }
-      await axios.post(`${API_URL}/api/add-to-cart.php`, { userId, productId: id });
+      await axios.post(`${API_URL}/add-to-cart.php`, { userId, productId: id });
       toast.success('Product added to cart');
     } catch (error) {
       console.error("Error adding to cart", error);
@@ -99,7 +99,7 @@ export default function ProductDetails() {
         toast.error('Please login to buy now');
         return;
       }
-      await axios.post(`${API_URL}/api/add-to-cart.php`, { userId, productId: id });
+      await axios.post(`${API_URL}/add-to-cart.php`, { userId, productId: id });
       toast.success('Product added to cart');
       toast('Redirecting to orders page...');
       setTimeout(() => {

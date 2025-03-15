@@ -45,15 +45,6 @@ export default function Navbar() {
                             <UserRound />
                         </FlyoutLink>
                     </div>
-
-
-                    {/* Wishlist  */}
-                    <FlyoutLink2 href='#'>
-                        <div className="   rounded-full flex justify-center cursor-pointer  text-white">
-                            <Heart></Heart>
-                        </div>
-                    </FlyoutLink2>
-
                     {/* User cart */}
                     <FlyoutLink2 href='/user/cart'>
                         <div className="rounded-full flex justify-center cursor-pointer  text-white" title="Cart">
@@ -155,7 +146,7 @@ const CategoryContent = () => {
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const response = await axios.get(`${API_URL}/api/getCategory.php`);
+                const response = await axios.get(`${API_URL}/getCategory.php`);
                 if (response.data && Array.isArray(response.data)) {
                     setCategories(response.data);
                 } else {

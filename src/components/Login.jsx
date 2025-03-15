@@ -68,7 +68,7 @@ export default function Login() {
     setIsSubmitting(true);
 
     try {
-      const response = await axios.post(`${API_URL}/api/login.php`, {
+      const response = await axios.post(`${API_URL}/login.php`, {
         email,
         password
       });
@@ -96,29 +96,9 @@ export default function Login() {
     }
   }
 
+
   return (
     <div className="min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-purple-900 via-gray-900 to-black relative overflow-hidden flex items-center justify-center">
-      {/* Magical Particles */}
-      <div className="fixed inset-0 opacity-40">
-        {[...Array(30)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-purple-400 rounded-full"
-            animate={{
-              scale: [1, 2, 1],
-              opacity: [0.3, 0.8, 0.3],
-              y: [Math.random() * 100, Math.random() * window.innerHeight],
-              x: [Math.random() * 100, Math.random() * window.innerWidth],
-            }}
-            transition={{
-              duration: Math.random() * 8 + 5,
-              repeat: Infinity,
-              ease: "linear"
-            }}
-          />
-        ))}
-      </div>
-
       <motion.div
         variants={containerVariants}
         initial="hidden"

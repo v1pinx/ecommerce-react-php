@@ -105,7 +105,7 @@ export default function ContactUs() {
     };
   
     try {
-      const response = await fetch(`${API_URL}/api/form.php`, {
+      const response = await fetch(`${API_URL}/form.php`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -19,7 +19,7 @@ const Dashboard = () => {
         // Fetch the stats from the API
         const fetchStats = async () => {
             try {
-                const response = await fetch(`${API_URL}/api/stats.php`); // Update with your API URL
+                const response = await fetch(`${API_URL}/stats.php`); // Update with your API URL
                 if (response.ok) {
                     const data = await response.json();
                     setStats(data);
@@ -77,7 +77,7 @@ const Orders = () => {
         const fetchOrders = async () => {
             setLoading(true); // Set loading to true before making the API call
             try {
-                const response = await fetch(`${API_URL}/api/get-orders.php`, {
+                const response = await fetch(`${API_URL}/get-orders.php`, {
                     method: 'GET', // Assuming a GET request to fetch all orders
                     headers: {
                         'Content-Type': 'application/json',
@@ -175,7 +175,7 @@ const Products = () => {
         const fetchProducts = async () => {
             try {
                 // Replace with your API endpoint URL
-                const response = await axios.get(`${API_URL}/api/products.php`);
+                const response = await axios.get(`${API_URL}/products.php`);
                 setProducts(response.data);
             } catch (error) {
                 console.error('Error fetching products:', error);
@@ -200,7 +200,7 @@ const Products = () => {
 
         try {
             // Replace with your API endpoint URL
-            const response = await axios.post(`${API_URL}/api/products.php`, newProduct);
+            const response = await axios.post(`${API_URL}/products.php`, newProduct);
 
             if (response.data.message === 'Product added successfully') {
                 // Add the new product to the list and update state
@@ -232,7 +232,7 @@ const Products = () => {
         console.log("Deleting product:", productId);
 
         try {
-            const response = await axios.delete(`${API_URL}/api/products.php`, {
+            const response = await axios.delete(`${API_URL}/products.php`, {
                 data: { id: productId }
             });
 
@@ -441,7 +441,7 @@ const FormQuery = () => {
     useEffect(() => {
         const fetchQueries = async () => {
             try {
-                const response = await fetch(`${API_URL}/api/form.php`);
+                const response = await fetch(`${API_URL}/form.php`);
 
                 if (response.ok) {
                     const data = await response.json();

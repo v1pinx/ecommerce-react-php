@@ -93,7 +93,7 @@ const Cart = () => {
   // Fetch cart items and product details
   const fetchCart = async () => {
     try {
-      const response = await fetch(`${API_URL}/api/get-cart.php?userId=${userId}`);
+      const response = await fetch(`${API_URL}/get-cart.php?userId=${userId}`);
       const data = await response.json();
 
       if (!response.ok) {
@@ -104,7 +104,7 @@ const Cart = () => {
         return;
       }
       const productDetailsPromises = data.cart.map(async (item) => {
-        const productResponse = await fetch(`${API_URL}/api/getProductById.php?id=${item.productId}`);
+        const productResponse = await fetch(`${API_URL}/getProductById.php?id=${item.productId}`);
         const productData = await productResponse.json();
 
         if (!productResponse.ok) {
@@ -132,7 +132,7 @@ const Cart = () => {
     if (newQuantity < 0) return;
 
     try {
-      const response = await fetch(`${API_URL}/api/update-cart.php`, {
+      const response = await fetch(`${API_URL}/update-cart.php`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -163,7 +163,7 @@ const Cart = () => {
   // Delete cart item
   const deleteFromCart = async (productId) => {
     try {
-      const response = await fetch(`${API_URL}/api/delete-from-cart.php`, {
+      const response = await fetch(`${API_URL}/delete-from-cart.php`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -236,7 +236,7 @@ const Cart = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch(`${API_URL}/api/checkout.php`, {
+      const response = await fetch(`${API_URL}/checkout.php`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

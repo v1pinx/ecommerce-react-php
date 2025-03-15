@@ -17,7 +17,7 @@ const ProtectedRoute = ({ component: Component }) => {
 
       try {
         // Verify token with backend
-        const response = await axios.get(`${API_URL}/api/verifyToken.php`, {
+        const response = await axios.get(`${API_URL}/verifyToken.php`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (response.status === 200) {

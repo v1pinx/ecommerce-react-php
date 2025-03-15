@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  php-app:
+    build: .
+    ports:
+      - "8080:80"
+    volumes:
+      - ./api:/var/www/html
+    depends_on:
+      - mysql-db
+    restart: always
+
+  mysql-db:
+    image: mysql:8.0
+    container_name: mysql-server
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: square
+      MYSQL_USER: user
+      MYSQL_PASSWORD: userpass  
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./square.sql:/docker-entrypoint-initdb.d/square.sql  
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    restart: always
+    ports:
+      - "8081:80" 
+    environment:
+      PMA_HOST: mysql-server
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: root
+
+volumes:
+  mysql_data:

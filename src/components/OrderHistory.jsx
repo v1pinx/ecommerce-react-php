@@ -30,7 +30,7 @@ const OrderCard = ({ order }) => {
 
   const fetchProductDetails = async (productId) => {
     try {
-      const response = await fetch(`${API_URL}/api/getProductById.php?id=${productId}`);
+      const response = await fetch(`${API_URL}/getProductById.php?id=${productId}`);
       if (!response.ok) throw new Error("Failed to fetch product details");
       const data = await response.json();
       return data.product;
@@ -197,7 +197,7 @@ export default function OrderHistory() {
   const fetchOrders = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`${API_URL}/api/get-orders.php`, {
+      const response = await fetch(`${API_URL}/get-orders.php`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

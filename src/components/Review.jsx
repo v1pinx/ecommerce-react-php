@@ -54,7 +54,7 @@ const ReviewSection = ({ productId }) => {
     useEffect(() => {
         const fetchReviews = async () => {
             try {
-                const response = await axios.get(`${API_URL}/api/write-review.php?productId=${productId}`);
+                const response = await axios.get(`${API_URL}/write-review.php?productId=${productId}`);
                 setReviews(response.data.reviews);
                 console.log("Reviews fetched successfully:", response.data.reviews);
             } catch (error) {

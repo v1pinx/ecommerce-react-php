@@ -59,7 +59,7 @@ const ProductShowcase = () => {
   const fetchProducts = async (page) => {
     setLoading(true);
     try {
-      const url = `${API_URL}/api/products.php?page=${page}&limit=${productsPerPage}&type=${category}&sort=${sortBy}`;
+      const url = `${API_URL}/products.php?page=${page}&limit=${productsPerPage}&type=${category}&sort=${sortBy}`;
       const response = await axios.get(url);
       const fetchedProducts = response.data;
 
@@ -86,7 +86,7 @@ const ProductShowcase = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get(`${API_URL}/api/getCategory.php`);
+        const response = await axios.get(`${API_URL}/getCategory.php`);
         setCategories(response.data);
       } catch (error) {
         console.error('Error fetching categories:', error);

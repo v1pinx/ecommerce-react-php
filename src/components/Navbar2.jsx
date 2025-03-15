@@ -148,7 +148,7 @@ const CategoryContent = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get(`${API_URL}/api/getCategory.php`);
+        const response = await axios.get(`${API_URL}/getCategory.php`);
         if (response.data && Array.isArray(response.data)) {
           console.log(response.data)
           setCategories(response.data);
