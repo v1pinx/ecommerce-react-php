@@ -18,11 +18,11 @@ export default function Main() {
         <>
             <Navbar />
             <Routes>
-                <Route path="/" element={<ProtectedRoute component={Home} />} />
+                <Route path="/" element={<Home/>} />
                 <Route path="/products" element={<ProductShowcaseWrapper />} />
                 <Route path="/products/:id" element={<ProductDetails />} />
-                <Route path='/user/cart' element={<ProtectedRoute component={Cart} />} />
-                <Route path='/user/orders' element={<ProtectedRoute component={OrderHistory} />} />
+                <Route path='/user/cart' element={<Cart />} />
+                <Route path='/user/orders' element={<OrderHistory />} />
                 <Route path="/contact" element={<ContactUs />} />
                 <Route path="/tos" element={<TermsOfService />} />
                 <Route path="/privacy-policy" element={<PrivacyPolicy />} />

@@ -3,10 +3,8 @@ import axios from "axios";
 import 'remixicon/fonts/remixicon.css';
 import toast from 'react-hot-toast';
 import { AnimatePresence, motion } from 'framer-motion';
-import { a, div } from "framer-motion/client";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { Heart } from "lucide-react";
 import { ShoppingCart } from "lucide-react";
 import { UserRound } from "lucide-react";
 

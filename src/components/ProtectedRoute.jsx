@@ -4,24 +4,27 @@ import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-const ProtectedRoute = ({ component: Component }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(null);
+const ProtectedRoute = ({ children }) => {
+  const [isAuthenticated, setIsAuthenticated] = useState(null); // start as null for loading
 
   useEffect(() => {
     const checkToken = async () => {
-      const token = localStorage.getItem('token'); // Get token from localStorage
+      const token = localStorage.getItem('token');
       if (!token) {
         setIsAuthenticated(false);
         return;
       }
 
       try {
-        // Verify token with backend
         const response = await axios.get(`${API_URL}/verifyToken.php`, {
           headers: { Authorization: `Bearer ${token}` },
         });
+        console.log(response);
+
         if (response.status === 200) {
           setIsAuthenticated(true);
+        } else {
+          setIsAuthenticated(false);
         }
       } catch (error) {
         setIsAuthenticated(false);
@@ -32,10 +35,10 @@ const ProtectedRoute = ({ component: Component }) => {
   }, []);
 
   if (isAuthenticated === null) {
-    return <div>Loading...</div>; // Show a loading indicator
+    return <div>Loading...</div>;
   }
 
-  return isAuthenticated ? <Component /> : <Navigate to="/login" />;
+  return isAuthenticated ? children : <Navigate to="/login" />;
 };
 
 export default ProtectedRoute;
